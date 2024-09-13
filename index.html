@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TokenForBeras - Meme Token</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Orbitron:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #00FFFF;
+            --secondary-color: #FF00FF;
+            --accent-color: #FFFF00;
+            --background-color: #120038;
+            --text-color: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(18, 0, 56, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bangers', cursive;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+            animation: neonPulse 1.5s infinite alternate;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            opacity: 0.1;
+            animation: gradientShift 10s ease infinite;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 600px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button {
+            background-color: var(--accent-color);
+            color: var(--background-color);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--accent-color);
+        }
+
+        .section-separator {
+            height: 100px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 80%);
+            margin: 50px 0;
+        }
+
+        .about, .tokenomics, .how-to-buy, .roadmap {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .about::before, .tokenomics::before, .how-to-buy::before, .roadmap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="%23FFFFFF" stroke-width="1" opacity="0.1"/></svg>') repeat;
+            opacity: 0.1;
+            animation: backgroundScroll 20s linear infinite;
+        }
+
+        h2 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .tokenomics-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .tokenomics-list li {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tokenomics-list li::before {
+            content: '🚀';
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .logo-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            box-shadow: 0 0 30px var(--primary-color);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .how-to-buy-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .step-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .step-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .roadmap-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .roadmap-item {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .roadmap-item::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: calc(100% + 30px);
+            background-color: var(--accent-color);
+            left: -31px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: -1;
+        }
+
+        .roadmap-item:last-child::after {
+            height: 50%;
+        }
+
+        footer {
+            background-color: rgba(18, 0, 56, 0.8);
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .token-address {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .token-address i {
+            margin-left: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .token-address i:hover {
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+        @keyframes neonPulse {
+            from {
+                text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color), 0 0 15px var(--primary-color), 0 0 20px var(--primary-color);
+            }
+            to {
+                text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color), 0 0 40px var(--primary-color);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes backgroundScroll {
+            from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: 100% 100%;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <header>
+        <nav class="container">
+            <div class="logo">TFB</div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#tokenomics">Tokenomics</a>
+                <a href="#how-to-buy">How to Buy</a>
+                <a href="#roadmap">Roadmap</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>TokenForBeras</h1>
+            <p>Get ready to embrace the chaos with TokenForBeras! 🎉 Join our wild community and enroll in the Beras fandom!</p>
+            <button class="cta-button">Join the Fun!</button>
+        </section>
+
+        <div class="section-separator"></div>
+
+        <section id="about" class="about">
+            <div class="container">
+                <h2>About TokenForBeras</h2>
+                <p>TokenForBeras is your ticket to the most entertaining and hilarious side of crypto. Inspired by the one and only Beras, we're surfing the current trend of celebrity-named tokens with a dash of humor and a lot of fun. Don't miss out on the laughs and potential gains! 💥🚀</p>
+            </div>
+        </section>
+
+        <div class="section-separator"></div>
+
+        <section id="tokenomics" class="tokenomics">
+            <div class="container">
+                <h2>TOKENOMICS</h2>
+                <ul class="tokenomics-list">
+                    <li>Total Supply: 1,000,000,000,000 TFB</li>
+                    <li>Liquidity Pool: 50% locked for 1 year</li>
+                    <li>Marketing Wallet: 10% for community growth</li>
+                    <li>Team Tokens: 5% vested over 6 months</li>
+                </ul>
+                <div class="logo-container">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+CiAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSI5MCIgZmlsbD0iIzAwRkZGRiIvPgogIDxwYXRoIGQ9Ik03MCAxMjBjMC0xNi41NyAxMy40My0zMCAzMC0zMHMzMCAxMy40MyAzMCAzMC0xMy40MyAzMC0zMCAzMC0zMC0xMy40My0zMC0zMHoiIGZpbGw9IiNGRjAwRkYiLz4KICA8cGF0aCBkPSJNOTAgODBjMC0xMS4wNSA4Ljk1LTIwIDIwLTIwczIwIDguOTUgMjAgMjAtOC45NSAyMC0yMCAyMC0yMC04Ljk1LTIwLTIweiIgZmlsbD0iI0ZGRkYwMCIvPgogIDxwYXRoIGQ9Ik0xMTAgMTQwYzAtNS41MiA0LjQ4LTEwIDEwLTEwczEwIDQuNDggMTAgMTAtNC40OCAxMC0xMCAxMC0xMC00LjQ4LTEwLTEweiIgZmlsbD0iI0ZGRkYwMCIvPgo8L3N2Zz4=" alt="TokenForBeras logo" class="logo-image">
+                </div>
+            </div>
+        </section>
+
+        <div class="section-separator"></div>
+
+        <section id="how-to-buy" class="how-to-buy">
+            <div class="container">
+                <h2>HOW TO BUY</h2>
+                <div class="how-to-buy-steps">
+                    <div class="step-card">
+                        <h3>Step 1: Get a Wallet</h3>
